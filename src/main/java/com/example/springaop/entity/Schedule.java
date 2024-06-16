@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
+
 public class Schedule extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

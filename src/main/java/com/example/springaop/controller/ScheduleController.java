@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
@@ -20,10 +21,10 @@ public class ScheduleController {
         return scheduleService.createSchedule(reqScheduleDto);
     }
 
-    //Read Schedule
+    //특정 Read Schedule
     @GetMapping("/schedules/{scheduleId}")
-    public ReqScheduleDto getSchedule(@PathVariable Long scheduleId) {
-        return null;
+    public ResScheduleDto getSchedule(@PathVariable Long scheduleId) {
+        return scheduleService.findSchedule(scheduleId);
     }
 
     //Update Schedule

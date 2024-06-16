@@ -3,10 +3,11 @@ package com.example.springaop.service;
 import com.example.springaop.dto.ReqScheduleDto;
 import com.example.springaop.dto.ResScheduleDto;
 import com.example.springaop.entity.Schedule;
-import com.example.springaop.entity.TimeStamped;
 import com.example.springaop.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ScheduleService {
@@ -26,6 +27,12 @@ public class ScheduleService {
 
         scheduleRepository.save(schedule);
 
+        return new ResScheduleDto(schedule);
+    }
+
+    public ResScheduleDto findSchedule(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
+                () -> new RuntimeException("해당 아이디 없음"));
         return new ResScheduleDto(schedule);
     }
 
