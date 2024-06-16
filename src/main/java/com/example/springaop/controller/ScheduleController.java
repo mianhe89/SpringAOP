@@ -5,6 +5,8 @@ import com.example.springaop.dto.ResScheduleDto;
 import com.example.springaop.service.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 
@@ -25,6 +27,12 @@ public class ScheduleController {
     @GetMapping("/schedules/{scheduleId}")
     public ResScheduleDto getSchedule(@PathVariable Long scheduleId) {
         return scheduleService.findSchedule(scheduleId);
+    }
+
+    //All read Schedule
+    @GetMapping("/schedules")
+    public List<ResScheduleDto> getSchedule() {
+        return scheduleService.findAllSchedule();
     }
 
     //Update Schedule
