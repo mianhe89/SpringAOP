@@ -1,7 +1,6 @@
 package com.example.springaop.dto;
 
 import com.example.springaop.entity.Schedule;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +15,7 @@ public class ResScheduleDto {
     private Integer password;
     private LocalDateTime createdAt;
 
+
     public ResScheduleDto(Schedule schedule) {
         this.title = schedule.getTitle();
         this.content = schedule.getContent();
@@ -23,6 +23,5 @@ public class ResScheduleDto {
         this.password = schedule.getPassword();
         this.createdAt = schedule.getCreatedAt();
     }
-
 
 }
