@@ -3,7 +3,6 @@ package com.example.springaop.controller;
 import com.example.springaop.dto.ReqScheduleDto;
 import com.example.springaop.dto.ResScheduleDto;
 import com.example.springaop.service.ScheduleService;
-import org.hibernate.annotations.Fetch;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +44,8 @@ public class ScheduleController {
 
     //Delete Schedule
     @DeleteMapping("/schedules//{scheduleId}")
-    public String deleteSchedule(@PathVariable Long scheduleId) {
-        scheduleService.deleteSchedule(scheduleId); // Hard Delete
+    public String deleteSchedule(@PathVariable Long scheduleId, @RequestBody ReqScheduleDto reqScheduleDto) {
+        scheduleService.deleteSchedule(scheduleId, reqScheduleDto); // Hard Delete
 
         return "삭제가 완료되었습니다.";
     }

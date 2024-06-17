@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 public class ResScheduleDto {
+    private Long id;
     private String title;
     private String content;
     private String manager;
@@ -17,6 +18,7 @@ public class ResScheduleDto {
 
 
     public ResScheduleDto(Schedule schedule) {
+        this.id = schedule.getId();
         this.title = schedule.getTitle();
         this.content = schedule.getContent();
         this.manager = schedule.getManager();

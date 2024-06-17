@@ -31,22 +31,20 @@ public class ScheduleService {
         return new ResScheduleDto(schedule);
     }
 
-    public ResScheduleDto findSchedule(Long scheduleId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(
-                () -> new RuntimeException("없는 아이디 입니다.")
-        );
+    public ResScheduleDto findSchedule(Long id) {
+        Schedule schedule = findByScheduleId(id);
         return new ResScheduleDto(schedule);
     }
 
     public List<ResScheduleDto> findAllSchedule() {
-//        return scheduleRepository.findAllByOrderByCreatedAtDesc().stream().map(ResScheduleDto::new).toList();
-        return scheduleRepository.findAll().stream().map(ResScheduleDto::new).toList();
+        if (scheduleRepository.findAllByOrderByCreatedAtDesc() != null) {
+            throw new RuntimeException("데이터가 없습니다.");
+        }
+        return scheduleRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public ResScheduleDto updateSchedule(Long id, ReqScheduleDto reqScheduleDto) {
-        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("없는 아이디 입니다.")
-        );
+        Schedule schedule = findByScheduleId(id);
         if (!(id.equals(schedule.getId())) || !Objects.equals(reqScheduleDto.getPassword(), schedule.getPassword())) {
             throw new RuntimeException("패스워드 오류 혹은 사용자와 일치하지 않는 유저입니다.");
         }
@@ -58,13 +56,21 @@ public class ScheduleService {
         return new ResScheduleDto(schedule);
     }
 
-    public void deleteSchedule(Long id) {
-        Schedule schedule = scheduleRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("없는 아이디 입니다.")
-        );
-        schedule.isDelete();
-        scheduleRepository.save(schedule); //Soft Delete 상태로써 관리
+    public void deleteSchedule(Long id, ReqScheduleDto reqScheduleDto) {
+        Schedule schedule = findByScheduleId(id);
+        if (!Objects.equals(reqScheduleDto.getPassword(), schedule.getPassword())) {
+            throw new RuntimeException("패스워드 오류");
+        }
+        // Soft Delete 상태로써 관리
+        // schedule.isDelete();
+        // scheduleRepository.save(schedule);
 
-        // scheduleRepository.deleteById(id); Hard Delete
+        scheduleRepository.deleteById(id); // Hard Delete
+    }
+
+    protected Schedule findByScheduleId(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("없는 아이디의 일정 입니다.")
+        );
     }
 }
