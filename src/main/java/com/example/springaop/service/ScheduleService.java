@@ -5,18 +5,20 @@ import com.example.springaop.dto.ResScheduleDto;
 import com.example.springaop.entity.Schedule;
 import com.example.springaop.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
-    public ScheduleService(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository; // 의존성 주입
-    }// 생성자에 Repository 를적으면서 왜? 의존성이 주입되는지 다시 한 번 공부.
+//    public ScheduleService(ScheduleRepository scheduleRepository) {
+//        this.scheduleRepository = scheduleRepository; // 의존성 주입
+//    }// 생성자에 Repository 를적으면서 왜? 의존성이 주입되는지 다시 한 번 공부.
 
     @Transactional
     public ResScheduleDto createSchedule(ReqScheduleDto reqScheduleDto) {
@@ -25,8 +27,9 @@ public class ScheduleService {
         String manager = reqScheduleDto.getManager();
         Integer password = reqScheduleDto.getPassword();
         Schedule schedule = new Schedule(title, content, manager, password);
-
+        //
         scheduleRepository.save(schedule);
+
 
         return new ResScheduleDto(schedule);
     }

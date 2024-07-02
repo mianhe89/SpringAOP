@@ -1,6 +1,7 @@
 package com.example.springaop.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
-
 public class Schedule extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

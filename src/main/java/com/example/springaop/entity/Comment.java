@@ -2,6 +2,7 @@ package com.example.springaop.entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +17,10 @@ public class Comment extends TimeStamped {
 
     @ManyToOne
     @JoinColumn(name = "schedule_id") // 매핑 관계 설정
-    private Schedule scheduleId;
+    private Schedule schedule;
 
     @Column
+    @NotNull(message = "공백은 불가합니다.")
     private String comment;
 
     @Column
@@ -27,6 +29,11 @@ public class Comment extends TimeStamped {
     public Comment(String comment, String userName, Schedule scheduleId) {
         this.comment = comment;
         this.userName = userName;
-        this.scheduleId = scheduleId;
+        this.schedule = scheduleId;
     }
+
+    public void changeComment(String comment) {
+        this.comment = comment;
+    }
+
 }

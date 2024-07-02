@@ -17,7 +17,7 @@ public class ResComment {
     public ResComment(Comment comment) {
         this.id = comment.getId();
         this.comment = comment.getComment();
-        this.scheduleId = comment.getScheduleId().getId();
+        this.scheduleId = comment.getSchedule().getId();
         this.userName = comment.getUserName();
         this.updatedAt = comment.getUpdatedAt();
     }
