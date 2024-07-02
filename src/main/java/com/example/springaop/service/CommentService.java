@@ -38,4 +38,9 @@ public class CommentService {
         commentRepository.save(comment);
         return new ResComment(comment);
     }
+
+    @Transactional
+    public void deleteComment(Long ScheduleId, Long CommentId) {
+        commentRepository.deleteByIdAndScheduleId(CommentId, ScheduleId);
+    }
 }

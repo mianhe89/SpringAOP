@@ -12,4 +12,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findByIdAndScheduleId(
             Long id, Long scheduleId);
 
+    void deleteByIdAndScheduleId(
+            Long id, Long scheduleId);
+
 }
