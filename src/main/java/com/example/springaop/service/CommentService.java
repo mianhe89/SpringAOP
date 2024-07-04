@@ -1,9 +1,9 @@
 package com.example.springaop.service;
 
+import com.example.springaop.entity.Schedule;
 import com.example.springaop.dto.ReqComment;
 import com.example.springaop.dto.ResComment;
 import com.example.springaop.entity.Comment;
-import com.example.springaop.entity.Schedule;
 import com.example.springaop.repository.CommentRepository;
 import com.example.springaop.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
@@ -41,6 +41,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Long ScheduleId, Long CommentId) {
-        commentRepository.deleteByIdAndScheduleId(CommentId, ScheduleId);
+        commentRepository.deleteByIdAndScheduleId(CommentId, ScheduleId)
+                .orElseThrow(() -> new RuntimeException("덧글 또는 일정이 없습니다"));
     }
 }
