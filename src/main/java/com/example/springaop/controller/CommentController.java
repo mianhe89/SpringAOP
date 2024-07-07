@@ -19,6 +19,8 @@ public class CommentController {
     private final JwtUtil jwtUtil;
 
 
+    // 여기서 특정 메서드
+
     //댓글 등록
     @PostMapping("/comments/{ScheduleId}")
     public ResComment postComment(@PathVariable Long ScheduleId,
@@ -49,26 +51,5 @@ public class CommentController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("삭제에 성공했습니다.");
-    }
-
-
-    public String getJwt(@CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
-        // JWT 토큰 substring
-        String token = jwtUtil.substringToken(tokenValue);
-
-        // 토큰 검증
-        if (!jwtUtil.validateToken(token)) {
-            throw new IllegalArgumentException("Token Error");
-        }
-        // 토큰에서 사용자 정보 가져오기
-        Claims info = jwtUtil.getUserInfoFromToken(token);
-        // 사용자 username
-        String username = info.getSubject();
-        System.out.println("username = " + username);
-        // 사용자 권한
-        String authority = (String) info.get(JwtUtil.AUTHORIZATION_KEY);
-        System.out.println("authority = " + authority);
-
-        return "getJwt : " + username + ", " + authority;
     }
 }

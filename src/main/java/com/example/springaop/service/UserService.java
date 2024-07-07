@@ -8,6 +8,8 @@ import com.example.springaop.jwt.JwtUtil;
 import com.example.springaop.repository.UserRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -56,18 +59,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void login(LoginReqDto reqDto, HttpServletResponse res) {
-        String username = reqDto.getUsername();
-        String password = reqDto.getPassword();
-
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("해당하는 유저가 없습니다.")
-        );
-
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
-        }
-        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
-        jwtUtil.addJwtToCookie(token, res);
-    }
+//    public void login(LoginReqDto reqDto, HttpServletResponse res) {
+//        String username = reqDto.getUsername();
+//        String password = reqDto.getPassword();
+//
+//        User user = userRepository.findByUsername(username).orElseThrow(
+//                () -> new IllegalArgumentException("해당하는 유저가 없습니다.")
+//        );
+//
+//        if (!passwordEncoder.matches(password, user.getPassword())) {
+//            throw new IllegalArgumentException("패스워드가 일치하지 않습니다.");
+//        }
+//        String token = jwtUtil.createToken(user.getUsername(), user.getRole());
+//        jwtUtil.addJwtToCookie(token, res);
+//    }
 }

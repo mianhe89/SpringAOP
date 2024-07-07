@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @Slf4j(topic = "AuthFilter")
 @Component
-@Order
+@Order(1)
 public class AuthFilter implements Filter {
 
     private final UserRepository userRepository;
@@ -28,14 +28,18 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
         log.info("AuthFilter -> doFilter 필터 매서드 실행중");
+
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String url = httpServletRequest.getRequestURI();
+        log.info("Request URI: {}", url);
 
         if (StringUtils.hasText(url) &&
                 (url.startsWith("/api/user") || url.startsWith("/css") || url.startsWith("/js"))
         ) {
             // 회원가입, 로그인 관련 API 는 인증 필요없이 요청 진행
+            log.info("Authentication not required for URL: {}", url);
             chain.doFilter(request, response); // 다음 Filter 로 이동
         } else {
             // 나머지 API 요청은 인증 처리 진행
@@ -48,6 +52,7 @@ public class AuthFilter implements Filter {
 
                 // 토큰 검증
                 if (!jwtUtil.validateToken(token)) {
+                    log.error("Invalid Token");
                     throw new IllegalArgumentException("Token Error");
                 }
 
@@ -61,6 +66,7 @@ public class AuthFilter implements Filter {
                 request.setAttribute("user", user);
                 chain.doFilter(request, response); // 다음 Filter 로 이동
             } else {
+                log.error("Not Found Token");
                 throw new IllegalArgumentException("Not Found Token");
 
             }

@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SignupRequestDto {
     private String nickname;
 
-
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)[a-z\\d]{4,10}$")
     private String username;
 
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,15}$") // 비밀번호를 해쉬화해놔서
